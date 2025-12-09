@@ -127,6 +127,21 @@
     cursor: not-allowed;
 }
 
+.btn-repair {
+    padding: 4px 12px;
+    font-size: 12px;
+    background: #1677ff;
+    color: #fff;
+    border-color: #1677ff;
+    flex-shrink: 0;
+}
+
+.btn-repair:hover {
+    background: #4096ff;
+    border-color: #4096ff;
+    color: #fff;
+}
+
 .char-count {
     font-size: 12px;
     color: #666;
@@ -145,6 +160,9 @@
     background: #fff2f0;
     border: 1px solid #ffccc7;
     color: #ff4d4f;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .notification.success {

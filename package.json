@@ -16,6 +16,7 @@
     "@react-three/fiber": "^9.4.0",
     "antd": "^6.0.0",
     "file-saver": "^2.0.5",
+    "jsonrepair": "^3.9.0",
     "lucide-react": "^0.553.0",
     "pdfjs-dist": "4.8.69",
     "react": "^19.2.0",

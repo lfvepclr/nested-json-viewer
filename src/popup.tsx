@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { jsonrepair } from 'jsonrepair';
 import './popup.css';
 
 const Popup: React.FC = () => {
@@ -6,6 +7,7 @@ const Popup: React.FC = () => {
   const [type, setType] = useState<'json' | 'xml' | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [valid, setValid] = useState(false);
+  const [repairSuccess, setRepairSuccess] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // 使用 ref 存储最新状态，避免闭包陷阱
@@ -78,6 +80,35 @@ const Popup: React.FC = () => {
     setType(null);
     setValid(false);
     setError(null);
+    setRepairSuccess(false);
+  };
+
+  // JSON 修复功能 - 使用 jsonrepair 库修复错误的 JSON
+  const handleRepairJson = () => {
+    try {
+      // 使用 jsonrepair 修复 JSON
+      const repairedJson = jsonrepair(text);
+
+      // 更新文本框内容
+      setText(repairedJson);
+
+      // 重新验证修复后的内容
+      const result = validate(repairedJson);
+      setType(result.type);
+      setValid(result.valid);
+      setError(result.error);
+
+      // 显示修复成功提示
+      setRepairSuccess(true);
+
+      // 3秒后自动隐藏成功提示
+      setTimeout(() => {
+        setRepairSuccess(false);
+      }, 3000);
+    } catch (e) {
+      // 如果修复失败，保持原有错误提示
+      console.error('JSON repair failed:', e);
+    }
   };
 
   // 快捷键 - 支持 Mac 和 Windows 快捷键
@@ -130,7 +161,14 @@ const Popup: React.FC = () => {
       <div className="char-count">{text.length} 字符</div>
 
       {valid && type && <div className="notification success">✓ {type.toUpperCase()} 格式正确</div>}
-      {error && <div className="notification error">✗ {error}</div>}
+      {error && type === 'json' && (
+        <div className="notification error">
+          <button className="btn btn-repair" onClick={handleRepairJson}>修复 JSON</button>
+          <span>✗ {error}</span>
+        </div>
+      )}
+      {error && type !== 'json' && <div className="notification error">✗ {error}</div>}
+      {repairSuccess && <div className="notification success">✓ JSON 修复完成</div>}
 
       <div className="tips">快捷键: Ctrl/Cmd+Enter 渲染 | Ctrl/Cmd+L 清空</div>
     </div>
