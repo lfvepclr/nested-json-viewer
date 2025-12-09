@@ -28,6 +28,9 @@
 
 ## About
 
+### JSON格式修复：
+使用开源包jsonrepair，修复JSON格式错误
+![alt jsonview](img/jsonfix.png)
 ### 测试字段串：
 
 1. 简单JSON字段串：包含value有json字段串、base64pdf、base64image
