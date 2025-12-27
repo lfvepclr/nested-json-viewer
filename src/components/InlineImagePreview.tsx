@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Button} from 'antd'
-import {DownloadOutlined, FullscreenOutlined} from '@ant-design/icons'
+import {DownloadOutlined, FullscreenOutlined, PlusOutlined, MinusOutlined} from '@ant-design/icons'
 import {generateImageFileName} from '../utils/fileNameGenerator'
 
 // 内联 imageUtils 功能
@@ -36,6 +36,12 @@ export const InlineImagePreview: React.FC<InlineImagePreviewProps> = ({
                                                                           imageType,
                                                                           maxHeight = 300
                                                                       }) => {
+    const [scale, setScale] = useState(1)
+
+    const zoomIn = () => setScale(prev => Math.min(prev + 0.25, 3.0))
+    const zoomOut = () => setScale(prev => Math.max(prev - 0.25, 0.25))
+    const resetZoom = () => setScale(1)
+
     const handleDownload = () => {
         if (!base64Data) return
 
@@ -90,12 +96,12 @@ export const InlineImagePreview: React.FC<InlineImagePreviewProps> = ({
         <div style={{
             overflow: 'hidden'
         }}>
-            {/* 工具栏 - 下载和全屏按钮 */}
+            {/* 工具栏 - 下载、全屏、缩放按钮 */}
             <div style={{
                 display: 'flex',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
-                gap: '12px',
+                gap: '8px',
                 padding: '8px 0px',
                 marginBottom: '8px',
                 borderBottom: '1px solid #d9d9d9',
@@ -118,12 +124,23 @@ export const InlineImagePreview: React.FC<InlineImagePreviewProps> = ({
                 >
                     全屏查看
                 </Button>
-                <div style={{fontSize: '12px', color: '#6b7280'}}>
+                <div style={{display: 'flex', alignItems: 'center', marginLeft: '8px', borderLeft: '1px solid #d9d9d9', paddingLeft: '8px'}}>
+                    <Button size="small" icon={<MinusOutlined/>} onClick={zoomOut} disabled={scale <= 0.25}/>
+                    <span 
+                        style={{fontSize: '12px', margin: '0 6px', cursor: 'pointer', minWidth: '45px', textAlign: 'center'}} 
+                        onClick={resetZoom}
+                        title="点击重置"
+                    >
+                        {Math.round(scale * 100)}%
+                    </span>
+                    <Button size="small" icon={<PlusOutlined/>} onClick={zoomIn} disabled={scale >= 3.0}/>
+                </div>
+                <div style={{fontSize: '12px', color: '#6b7280', marginLeft: 'auto'}}>
                     {imageType.toUpperCase()} 图片预览
                 </div>
             </div>
 
-            {/* 图片内容 - 按比例缩放 */}
+            {/* 图片内容 - 支持缩放 */}
             <div style={{
                 display: 'flex',
                 justifyContent: 'flex-start',
@@ -135,10 +152,11 @@ export const InlineImagePreview: React.FC<InlineImagePreviewProps> = ({
                     src={dataUrl}
                     alt="Base64 预览"
                     style={{
-                        maxWidth: '100%',
-                        maxHeight: maxHeight,
+                        maxWidth: scale === 1 ? '100%' : 'none',
+                        width: scale !== 1 ? `${scale * 100}%` : 'auto',
+                        height: 'auto',
                         objectFit: 'contain',
-                        height: 'auto'
+                        transition: 'width 0.2s ease'
                     }}
                     onError={(e) => {
                         console.error('图片加载失败:', e)
