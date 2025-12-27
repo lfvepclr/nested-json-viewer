@@ -30,7 +30,7 @@
 
 ### JSON格式修复：
 使用开源包jsonrepair，修复JSON格式错误
-![alt jsonview](img/jsonfix.png)
+![alt jsonview](img/1_jsonfix.png)
 ### 测试字段串：
 
 1. 简单JSON字段串：包含value有json字段串、base64pdf、base64image
@@ -44,7 +44,8 @@
 }
 ```
 显示结果
-![alt jsonview](img/json_base64.png)
+![alt jsonview](img/2_json_base64_1.png)
+![alt jsonview](img/2_json_base64_2.png)
 2. 示例字段串：json包含XML字符串、图片、json字段串
 
 ```json
@@ -67,7 +68,7 @@
 }
 ```
 显示结果
-![alt jsonview](img/json_xml.png)
+![alt jsonview](img/3_json_xml.png)
 
 3. 示例字段串：xml，包含JSON
 
@@ -81,7 +82,7 @@
 </request>
 ```
 显示结果
-![alt jsonview](img/xml_json.png)
+![alt jsonview](img/4_xml_json.png)
 
 
 ### 📋 开发者文档 | Developer Documentation
