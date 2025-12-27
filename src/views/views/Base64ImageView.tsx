@@ -84,7 +84,7 @@ export const Base64ImageView: React.FC<ViewComponentProps> = ({
                         <InlineImagePreview
                             base64Data={cleanBase64}
                             imageType={imageType}
-                            maxHeight={250}
+                            maxHeight={500}
                         />
                     </div>
                 </div>

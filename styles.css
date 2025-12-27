@@ -1,5 +1,19 @@
 /* 模态样式已内联，无需额外导入 */
 
+/* CSS 变量定义 - 现代毛玻璃主题 */
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-shadow: rgba(31, 38, 135, 0.15);
+    --accent-blue: #0066cc;
+    --accent-purple: #7c3aed;
+    --accent-green: #059669;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-subtle: rgba(148, 163, 184, 0.3);
+    --border-strong: rgba(99, 102, 241, 0.5);
+}
+
 body {
     min-width: 420px;
     font-family: "Segoe UI", Arial, sans-serif;
@@ -155,9 +169,14 @@ textarea {
     z-index: 9999;
     min-width: 640px;
     max-height: 70vh;
-    background: #fff;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, .35);
-    border-radius: 8px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 
+        0 8px 32px rgba(31, 38, 135, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
 }
@@ -166,11 +185,12 @@ textarea {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 10px;
-    background: #f0f0f0;
-    border-bottom: 1px solid #ccc;
-    font-family: monospace;
+    padding: 10px 16px;
+    background: rgba(248, 250, 252, 0.8);
+    border-bottom: 1px solid var(--border-subtle);
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
     font-size: 12px;
+    border-radius: 12px 12px 0 0;
 }
 
 #closeFloat {
@@ -192,7 +212,9 @@ textarea {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 10000;
     display: flex;
     flex-direction: column;
@@ -204,39 +226,49 @@ textarea {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 6px 12px;
-    border-radius: 8px 8px 0 0;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 10px 16px;
+    border-radius: 12px 12px 0 0;
     width: 90%;
     max-width: 800px;
     box-sizing: border-box;
+    border: 1px solid var(--border-subtle);
+    border-bottom: none;
 }
 
 .image-float-header span {
-    font-weight: bold;
-    color: #333;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
 .image-close-btn {
-    background: #f44336;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     color: white;
     border: none;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
 .image-close-btn:hover {
-    background: #d32f2f;
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
 }
 
 .image-float-body {
-    background: white;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -244,22 +276,29 @@ textarea {
     max-width: 800px;
     max-height: 80vh;
     overflow: auto;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+    border: 1px solid var(--border-subtle);
+    border-top: none;
+    border-bottom: none;
 }
 
 .image-url-display {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 4px 8px;
-    border-radius: 0 0 8px 8px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 8px 12px;
+    border-radius: 0 0 12px 12px;
     width: 90%;
     max-width: 800px;
     box-sizing: border-box;
-    font-family: monospace;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
     font-size: 11px;
-    color: #666;
+    color: var(--text-secondary);
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    border: 1px solid var(--border-subtle);
+    border-top: none;
 }
 
 .hidden {
@@ -288,26 +327,78 @@ textarea {
 }
 
 .sub-json, .sub-xml {
-    border-left: 2px solid #0078d4;
-    padding-left: 8px;
-    margin-top: 4px;
+    border-left: 3px solid var(--accent-blue);
+    padding-left: 12px;
+    margin-top: 8px;
+    margin-left: 20px;
     position: relative;
 }
 
-/* 深层级的额外视觉提示 */
-.node[data-depth="3"]::before,
-.node[data-depth="4"]::before,
-.node[data-depth="5"]::before {
-    background: #ff9800;
-    width: 2px;
+/* 毛玻璃面板效果 */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px solid rgba(99, 102, 241, 0.35);
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 
+        0 4px 16px rgba(99, 102, 241, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    transition: all 0.2s ease;
 }
 
-.node[data-depth="6"]::before,
-.node[data-depth="7"]::before,
-.node[data-depth="8"]::before {
-    background: #f44336;
-    width: 2px;
+.glass-panel:hover {
+    border-color: rgba(99, 102, 241, 0.9);
+    box-shadow: 
+        0 6px 20px rgba(99, 102, 241, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
+
+/* 路径标签样式 */
+.sub-path-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    padding: 4px 8px;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* 解析错误样式 */
+.parse-error {
+    color: #dc2626;
+    background: rgba(220, 38, 38, 0.1);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid #dc2626;
+    font-size: 12px;
+}
+
+/* 截断值样式 */
+.truncated-value {
+    max-width: 100%;
+}
+
+.truncated-value .str {
+    word-break: break-all;
+    overflow-wrap: break-word;
+}
+
+.truncate-indicator {
+    color: var(--text-secondary);
+    font-size: 11px;
+    margin-left: 8px;
+    padding: 2px 6px;
+    background: rgba(99, 102, 241, 0.15);
+    border-radius: 10px;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    white-space: nowrap;
+}
+
+/* 深层级的额外视觉提示 - 已在下方重新设计 */
 
 .end-symbol {
     color: #881391;
@@ -368,19 +459,25 @@ textarea {
     font-family: monospace;
 }
 
-/* 重新设计的层级颜色方案 */
-/* 层级0-2：浅色调蓝色系，组内有区别 */
-.node[data-depth="0"]::before { background: #e3f2fd; width: 2px; } /* 最浅蓝色 */
-.node[data-depth="1"]::before { background: #bbdefb; width: 2px; } /* 浅蓝色 */
-.node[data-depth="2"]::before { background: #90caf9; width: 2px; } /* 中浅蓝色 */
-
-/* 层级3-5：中等色调蓝紫色系，组内有区别 */
-.node[data-depth="3"]::before { background: #2196f3; width: 2px; } /* 标准蓝色 */
-.node[data-depth="4"]::before { background: #1976d2; width: 2px; } /* 深蓝色 */
-.node[data-depth="5"]::before { background: #3f51b5; width: 2px; } /* 蓝紫色（靛蓝） */
-.node[data-depth="6"]::before { background: #4a148c; width: 3px; }
-.node[data-depth="7"]::before { background: #6a1b9a; width: 3px; }
-.node[data-depth="8"]::before { background: #7b1fa2; width: 3px; }
+/* 重新设计的层级颜色方案 - 渐变色谱易于区分 */
+/* 层级0: 灭灰色 */
+.node[data-depth="0"]::before { background: #94a3b8; width: 2px; }
+/* 层级1: 蓝色 */
+.node[data-depth="1"]::before { background: #3b82f6; width: 2px; }
+/* 层级2: 青色 */
+.node[data-depth="2"]::before { background: #06b6d4; width: 2px; }
+/* 层级3: 绿色 */
+.node[data-depth="3"]::before { background: #10b981; width: 2px; }
+/* 层级4: 黄绿色 */
+.node[data-depth="4"]::before { background: #84cc16; width: 2px; }
+/* 层级5: 橙色 */
+.node[data-depth="5"]::before { background: #f59e0b; width: 3px; }
+/* 层级6: 橙红色 */
+.node[data-depth="6"]::before { background: #f97316; width: 3px; }
+/* 层级7: 红色 */
+.node[data-depth="7"]::before { background: #ef4444; width: 3px; }
+/* 层级8+: 紫红色 */
+.node[data-depth="8"]::before { background: #ec4899; width: 3px; }
 
 /* 模态框动画 */
 @keyframes fadeIn {

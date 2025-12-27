@@ -129,6 +129,16 @@ const renderXmlNode = (
 };
 
 /**
+ * 截断过长的字符串，添加省略号
+ */
+const truncateString = (str: string, maxLength: number = 100): { text: string; isTruncated: boolean } => {
+    if (str.length <= maxLength) {
+        return { text: str, isTruncated: false };
+    }
+    return { text: str.substring(0, maxLength) + '...', isTruncated: true };
+};
+
+/**
  * XML 视图组件
  * 处理 XML 字符串的解析和渲染，支持递归渲染子元素
  */
@@ -179,28 +189,27 @@ const XmlView: React.FC<ViewComponentProps> = ({
                     <span className="key">{keyName}: </span>
                 </div>
 
-                {/* 值容器区域 */}
-                <div className="value-container copyable" style={{display: 'flex', alignItems: 'flex-start'}}
-                     onClick={handleCopy}>
-                    <span className="str">"{xmlString}"</span>
-                </div>
+                {/* 值容器区域 - 截断显示 */}
+                {(() => {
+                    const { text, isTruncated } = truncateString(xmlString, 100);
+                    return (
+                        <div className="value-container copyable truncated-value" 
+                             style={{display: 'flex', alignItems: 'flex-start'}}
+                             onClick={handleCopy}
+                             title={isTruncated ? xmlString : undefined}>
+                            <span className="str">"{text}"</span>
+                            {isTruncated && <span className="truncate-indicator">({xmlString.length} chars)</span>}
+                        </div>
+                    );
+                })()}
             </div>
 
             {/* 子节点区域 */}
             {isVisible && (
                 <div className="children-wrapper">
-                    <div className="sub-xml" style={{
-                        marginLeft: '20px',
-                        marginTop: '8px',
-                        border: '1px solid #ddd',
-                        padding: '8px',
-                        background: '#f9f9f9'
-                    }}>
-                        <div style={{fontSize: '11px', color: '#666', marginBottom: '4px', fontFamily: 'monospace'}}>
-                            子XML完整路径: {path}
-                        </div>
+                    <div className="sub-xml glass-panel">
                         {parseError ? (
-                            <div>XML 解析错误: {parseError.message}</div>
+                            <div className="parse-error">XML 解析错误: {parseError.message}</div>
                         ) : xmlDoc ? (
                             renderXmlNode(xmlDoc.documentElement, path, depth + 1, renderChild)
                         ) : (

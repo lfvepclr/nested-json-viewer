@@ -6,36 +6,41 @@
 }
 
 .node:hover {
-    background-color: rgba(59, 130, 246, 0.05);
-    border-radius: 4px;
+    background-color: rgba(99, 102, 241, 0.05);
+    border-radius: 6px;
 }
 
 .value-container {
-    padding: 2px 4px;
-    border-radius: 4px;
+    padding: 2px 6px;
+    border-radius: 6px;
     transition: all 0.2s ease;
 }
 
 .value-container:hover {
-    background-color: rgba(59, 130, 246, 0.1);
+    background-color: rgba(99, 102, 241, 0.1);
 }
 
-/* 右键菜单样式 */
+/* 右键菜单样式 - 毛玻璃效果 */
 .context-menu {
     position: fixed;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 12px;
+    box-shadow: 
+        0 10px 40px rgba(31, 38, 135, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
     z-index: 1000;
-    min-width: 150px;
+    min-width: 160px;
+    overflow: hidden;
 }
 
 .context-menu-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
+    gap: 10px;
+    padding: 10px 14px;
     font-size: 14px;
     color: #374151;
     background: none;
@@ -43,26 +48,29 @@
     width: 100%;
     text-align: left;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.15s ease;
 }
 
 .context-menu-item:hover {
-    background-color: #f3f4f6;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    color: #4f46e5;
 }
 
 .context-menu-item:first-child {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
 .context-menu-item:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
-/* 模态框动画 */
+/* 模态框动画 - 毛玻璃效果 */
 .modal-overlay {
     animation: fadeIn 0.2s ease-out;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .modal-content {
@@ -103,13 +111,15 @@
     }
 }
 
-/* 悬停效果 */
+/* 悬停效果 - 毛玻璃光晕 */
 .hover-glow {
-    transition: box-shadow 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .hover-glow:hover {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 
+        0 0 20px rgba(99, 102, 241, 0.3),
+        0 0 40px rgba(139, 92, 246, 0.15);
 }
 
 /* 响应式设计 */
